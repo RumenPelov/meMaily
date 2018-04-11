@@ -9,6 +9,6 @@ Email surveys collection app Using React, Redux, Node, Express, MongoDB and OAut
 - MongoDB
 
 # Third party
--Sendgrid
--Stripe
--Google OAuth
+- Sendgrid
+- Stripe
+- Google OAuth
