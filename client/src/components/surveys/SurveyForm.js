@@ -45,22 +45,20 @@ class SurveyForm extends Component {
                     onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)} 
                 >
                     {this.renderFields()}
-                    <Link to="/surveys" className="red btn-flat white-text">
-                    Cancel
-                    </Link>
-
-                    <button type='submit' className="teal btn-flat right white-text">
-                    Next
-                    <i className="material-icons right" >done</i>
-                    </button>
-
-                    <a   className="teal lighten-1 btn-flat  white-text"
-                     style = {{margin: '0 30px'}}
-                     onClick={this.saveDraft.bind(this)}>
-                    Save Draft
-                    <i className="material-icons right" >backup</i>
-                    </a>
-
+                    <div className="custom-group-buttons custom-mt-30 custom-mb-20">
+                        <Link to="/surveys" className="custom-btn custom-btn--red custom-align-center">
+                            Cancel
+                        </Link>
+                        <button className="custom-btn custom-btn--green-2 custom-align-center"
+                                
+                                onClick={this.saveDraft.bind(this)}>
+                            <span>Save Draft</span>
+                            <i className="material-icons right custom-icon" >backup</i>
+                        </button>
+                        <button type='submit' className="custom-btn custom-btn--green-2 ">
+                            Next &rarr;
+                        </button>                  
+                    </div>
                 </form>
 
             </div>
@@ -110,3 +108,4 @@ SurveyForm = connect(mapStateToProps, {  fetchDraft } )(SurveyForm);
 
 export default SurveyForm;
 
+//style = {{margin: '0 30px'}}

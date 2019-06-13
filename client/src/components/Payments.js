@@ -9,14 +9,14 @@ class Payments extends Component {
         return(
             <StripeCheckout 
             name="Emaily"
-            description="5 for  5 email credits"
+            description="5$ for 5 emails use card 4242 4242 4242 4242"
             amount={500}
             token={token => this.props.handleToken(token)}
             stripeKey= 'pk_test_fj0Fh1kxVNIXo8KVnx0GFRGv'
         >
-        <p className={this.props.btnClass}>
+        <div className={this.props.btnClass}>
             Add Credits
-        </p>
+        </div>
         </StripeCheckout>
         );
     }

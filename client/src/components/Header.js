@@ -1,30 +1,37 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import 'jquery';
 import 'materialize-css';
 import {NavItem, Dropdown } from 'react-materialize';
 
 import Payments from './Payments';
+import * as actions  from '../actions';
 
 class Header extends Component {
+    
+    componentWillMount() {
+        this.props.fetchUser(this.props.history);
+    }
+
+    logout = () => {
+       this.props.logout(this.props.history);
+    }
   
     renderContent(){
         switch (this.props.auth) {
             case null:
                 return ;
-            case false:
+            case false :
                 return (
                     <li><a href="/auth/google">Login With Google</a></li>
                 );
             default:
-            return [
-            <li key='1' ><Payments btnClass="btn"/></li>,
-            <li key='3' style = {{margin: '0 10px' }}>  Credits: {this.props.auth.credits} </li>,
-            <li key='2'><a href="/api/logout" >Logout</a></li>
-            ];
-                
-            
+                return [
+                    <li key='1' ><Payments btnClass="custom-btn custom-btn--green custom-inline"/></li>,
+                    <li key='3' style = {{margin: '0 10px' }}>  Credits: {this.props.auth.credits} </li>,
+                    <li key='2' ><a onClick={this.logout} href="#!">Logout</a></li>
+                    ];
         }
     }
 
@@ -32,50 +39,51 @@ class Header extends Component {
         switch (this.props.auth) {
             case null:
                 return ;
-            case false:
+            case false :
                 return (
-                    <NavItem href="/auth/google">Login With Google</NavItem> 
+                    <NavItem  href="/auth/google">Login With Google</NavItem> 
                 );
             default:
             return [
-            <NavItem key='1' ><Payments btnClass="" /></NavItem>,
-            <NavItem  key='3' >Credits: {this.props.auth.credits} </NavItem>,
+            <NavItem key='1' onClick={()=>{}}><Payments btnClass="" /></NavItem>,
+            <NavItem key='3' onClick={()=>{}}>Credits: {this.props.auth.credits} </NavItem>,
             <NavItem key='4' divider />,
-            <NavItem  key='2' href="/api/logout" >Logout</NavItem> 
+            <NavItem  key='2' onClick={this.logout} >Logout</NavItem> 
             ];
                 
             
         }
     }
 
+
     render() {
 
         return (
-        <div>
-            <nav>
-            <div className="nav-wrapper">
-                <Link style = {{margin: '0 10px' }}
-                    to={this.props.auth ? '/surveys' : '/'}
-                    className="left brand-logo"
-                    >Emaily</Link>
+        <div >
+            <nav className="nav-wrapper deep-orange accent-4">
+                <div className="container">
+                    <div className="nav-wrapper ">
+                    <Link style = {{margin: '0 10px' }}
+                        to={this.props.auth ? '/surveys' : '/'}
+                        className="left brand-logo"
+                        >Emaily</Link>
 
-                <div className="right hide-on-med-and-up" style = {{margin: '0 20px'}}>
-                    <Dropdown options={{hover:true}} 
-                        trigger={
-                        <a type="text"
-                        className=""><i className="material-icons">menu</i></a>
-                        }>
-                        {this.renderDropContent()}
-                    </Dropdown>
+                    <div className="right hide-on-med-and-up" style = {{margin: '0 20px'}}>
+                        <Dropdown options={{hover:true}} 
+                            trigger={
+                            <a href="#!" type="text">
+                                <i className="material-icons">menu</i>
+                            </a>
+                            }>
+                            {this.renderDropContent()}
+                        </Dropdown>
+                    </div>
+            
+                    <ul id="nav-mobile" className="right hide-on-small-and-down">
+                        {this.renderContent()}
+                    </ul>               
+                </div>      
                 </div>
-        
-                <ul id="nav-mobile" className="right hide-on-small-and-down">
-                    {this.renderContent()}
-               
-                </ul>
-            </div>
-
-           
             </nav>
         </div> 
         )
@@ -86,5 +94,5 @@ function mapStateToProps(state){
     return { auth: state.auth };
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, actions)(withRouter(Header));
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+
+        <style>
+            .custom-image {
+                height: 100vh;
+                
+                background-image: linear-gradient(to 
+                bottom, 
+                rgba(255,255,255, 0.82),
+                rgba(255,255,255, 0.82)) ,
+                url("/mail4.jpg");
+                background-size: cover;
+                background-position: top;
+                background-repeat: no-repeat;
+                
+                position: relative;
+            }
+           
+            .card{
+                position: absolute;
+                top: 25%;
+                left: 50%;
+                padding: 20px 60px;
+                background-color:rgba(255,255,255, .1);
+                text-align: center;
+                transform: translate(-50%, 0%)    ;
+                -webkit-transform: translate(-50%, 0%)    ;
+                -moz-transform: translate(-50%, 0%)    ;
+                -ms-transform: translate(-50%, 0%)    ;
+                -o-transform: translate(-50%, 0%)    ;
+                border-radius: 20px;
+                -webkit-border-radius: 20px;
+                -moz-border-radius: 20px;
+                -ms-border-radius: 20px;
+                -o-border-radius: 20px;
+                box-shadow: 0 1.5rem 4rem rgba(0,0,0, .15);
+            }
+
+            @media only screen and (max-width:62.5em) {
+                .card {
+                    padding: 15px 10px;
+                    min-width: 280px;
+                }
+            }
+
+        
+        </style>
+
+    </head>
+    <body>
+        <div class="custom-image">
+            <div class="card">
+                <h1> &#128522;</h1>
+                <h2> You are great! </h2>
+                <h2> Thank you for your feedback </h2>
+            </div>
+        </div>
+      
+    </body>
+</html>

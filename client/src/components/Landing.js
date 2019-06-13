@@ -3,42 +3,40 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 class Landing extends Component {
-    renderContent(){
+
+    renderContent(){;
         switch (this.props.auth) {
             case null:
                 return ;
-            case false:
+            case false :
                 return (
-                    <div style={{textAlign: 'center'}}>
-                    <h1>
-                        Emaily!
-                    </h1>
-                    <p>Collect feedback from your users</p>
-                    <p>Please Login to start sending emails </p>
+                <div >
+                    <h3>
+                        Emaily
+                    </h3>
+                    <h6 className="custom-line">Fast and easy way to collect feedback from your clients</h6>
+                    <h6 className="custom-line">Login to start sending surveyes</h6>
+                    <a className="custom-btn  custom-btn--grey  custom-my-20 " href="/auth/google">Login With Google</a>
                 </div>
                 );
             default:
-            return  (
-                <div style={{textAlign: 'center'}}>
-                <h1>
-                    Emaily!
-                </h1>
-                <p>Press  <Link
-                style={{display: 'inline'}}
-              to={this.props.auth ? '/surveys' : '/'}
-               >here</Link> to start collecting feedbacks from your users</p>
-                 
-            </div>
-            );
-                
-            
+                return  (
+                    <div  >
+                    <h5 className="custom-mt-20"> Welcome to Emaily! </h5>
+                    <h6 className="custom-mt-10 custom-line">You are now ready to start collecting feedbacks </h6>
+                    <Link className="custom-btn  custom-btn--grey custom-my-20 "
+                        to={this.props.auth ? '/surveys' : '/'}>Next step &rarr;</Link>
+                     
+                </div>
+                );
         }
     }
+
 
     render() {
 
         return (
-            <div >
+            <div  className="custom-landing_card">
                 {this.renderContent()}
             </div>
         )

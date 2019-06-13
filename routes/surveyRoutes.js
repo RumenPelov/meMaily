@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const { Path } = require('path-parser');
 const { URL } = require('url');
+const path = require("path");
 const mongoose =require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
@@ -10,26 +11,28 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys');
 const Draft = mongoose.model('draft');
 
-module.exports = app => {
 
+module.exports = app => {
+    
     app.get('/api/surveys', requireLogin, async (req, res) => {
        const surveys = await Survey.find({ _user: req.user.id })
             .select({ recipients: false});
 
        res.send(surveys);
     });
-
+  
     app.get('/api/surveys/:surveyId/:choice', (req, res) => {
-        res.send("Thanks for voting");
+        //res.send("Thanks for voting");
+        res.sendFile(path.join(__dirname+'/views/index.html'));
     });
 
     app.post('/api/surveys/webhooks', (req, res) => {
-        console.log(req.body);
+ 
         const p = new Path('/api/surveys/:surveyId/:choice');
 
         _.chain(req.body)
             .map( ({email, url}) => {
-               
+
                 const pathname = new URL(url).pathname;
                 const match = p.test(pathname);
                 if (match) {
@@ -74,12 +77,12 @@ module.exports = app => {
         const mailer = new Mailer(survey, surveyTemplate(survey), from);
         
         try {
-        await mailer.send();
-        await survey.save();
-        req.user.credits -= 1;
-       const user = await req.user.save();
+            await mailer.send();
+            await survey.save();
+            req.user.credits -= 1;
+            const user = await req.user.save();
 
-       res.send(user);
+            res.send(user);
         } catch (err) {
             res.status(422).send(err);
         }
@@ -91,17 +94,17 @@ module.exports = app => {
         const {id} = req.body;
 
         await Survey.find()
-        .remove({ _id: id}, (err)=>{
-            if (err){
-                res.status(422).send(err);
-            }
+            .deleteOne({ _id: id}, (err)=>{
+                if (err){
+                    res.status(422).send(err);
+                }
            
-        });
+            });
 
         const surveys = await Survey.find({ _user: req.user.id })
             .select({ recipients: false});
 
-       res.send(surveys);
+        res.send(surveys);
 
     });
 
@@ -149,13 +152,14 @@ module.exports = app => {
      app.post('/api/surveys/draft/delete', requireLogin, async (req, res) => {
       
         await Draft.find()
-            .remove({ _id: req.user.id}, (err)=>{
+            .deleteOne({ _id: req.user.id}, (err)=>{
                 if (err){
                     res.status(422).send({});
                     console.log("Mongoose Error: ", err.message);
                     return ;
                 }
         });
+        res.send({});
     });
 
 }

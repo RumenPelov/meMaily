@@ -6,10 +6,22 @@ const dateToNumber = (str) => {
     return parseInt(value, 10);
 }
 
-export const fetchUser = () => {
+export const fetchUser = (history) => {
     return async function(dispatch) {
        const res = await axios.get('/api/current_user')
        
+       if(!res.data._id){
+            history.push('/');
+       }
+       dispatch({type: FETCH_USER, payload: res.data});
+    }
+}
+
+export const logout = (history) => {
+    return async function(dispatch) {
+       const res = await axios.get('/api/logout');
+       
+       history.push('/');
        dispatch({type: FETCH_USER, payload: res.data});
     }
 }

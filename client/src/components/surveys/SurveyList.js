@@ -1,142 +1,99 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import 'jquery';
-import 'materialize-css';
-import {NavItem, Dropdown } from 'react-materialize';
+import {Link} from 'react-router-dom';
 import * as actions  from '../../actions';
+
+import SurveyCard from './surveyCard';
+import DropdownInput from './DropdownInput';
 
 
 class SurveyList extends Component {
+ 
     componentDidMount(){
-        this.props.fetchSurveys();
+            this.props.fetchSurveys(); 
     }
 
-    deleteSurvey(){
-        this.props.deleteSurvey(arguments[0]);
-    }
 
-    sortAscSurveys(){
+    sortAscSurveys = () => {
         const surv = this.props.surveys.slice();
         this.props.sortAscSurveys(surv); 
     }
 
-    sortDescSurveys(){
+    sortDescSurveys = () => {
         const surv = this.props.surveys.slice();
         this.props.sortDescSurveys(surv); 
     }
 
 
-    sortYesSurveys(){
+    sortYesSurveys = () => {
         const surv = this.props.surveys.slice();
         this.props.sortYesSurveys(surv); 
     }
 
     renderSurveyNav(){
+
+        const items =  [{text:'Date Sent Asc', fn: this.sortAscSurveys},
+                        {text:'Date Sent Desc', fn: this.sortDescSurveys},
+                        {text:'Yes Response', fn: this.sortYesSurveys}]
+       
         if (this.props.surveys.length){
-        return (
-            <div>
-                <div style = {{margin: '20px 0' }}>
-                    <div>
-                    <a  className="left grey-text text-darken-1 "
-                    style = {{ fontSize: '1.5em' }}>Active surveys</a>
+            return (
+                <div>
+                    <div className="custom-group-buttons custom-mt-15" >
+                        <div>
+                            <h5 className=" grey-text text-darken-1 custom-margin-none">Active surveys</h5>
+                        </div>
+                       <div style = {{flex: '1' }}> </div>
+                       <Link to={'/surveys/new'} className="custom-btn custom-btn--grey-1">
+                                    New survey
+                                </Link>
+                        <DropdownInput items={items} placeholder="Sort by" />    
                     </div>
-                    <div className=" right" >
-                        <Dropdown className="right" options={{hover:true}} trigger={
-                                <a
-                                className="blue-grey lighten-5 btn-flat "
-                                >Sort By</a>
-                            }>
-                            <NavItem onClick={this.sortAscSurveys.bind(this)}>Date Sent Asc</NavItem>
-                            <NavItem divider />
-                            <NavItem onClick={this.sortDescSurveys.bind(this)}>Date Sent Desc</NavItem>
-                            <NavItem divider />
-                            <NavItem  onClick={this.sortYesSurveys.bind(this)}>Yes Response</NavItem>
-                        </Dropdown>
+                   
+                    <div style = {{margin: '20px 0' }} >
+                        <hr />
                     </div>
-   
                 </div>
-                <br />
-                <div style = {{margin: '20px 0' }} >
-                    <hr />
-                </div>
-            </div>
-        )
+            )
         }
+
         return (
-        <div style={{textAlign: 'center', margin: '40px 0'}}>
-        <h5>You currently do not have any surveys</h5>
-        <p>To create new survey,  press the plus button at bottom right corner</p>
-        </div>
+            <div className="custom-landing_card">
+                <h5 className="custom-text custom-mt-20">You currently do not have any surveys</h5>
+                <Link className="custom-btn custom-btn--grey custom-my-20 "
+                        to = "/surveys/new" >
+                    Create survey &rarr;
+                </Link>
+            </div>
         )
     }
 
     renderSurveys() {
-       return this.props.surveys.reverse().map(survey => {
+        return this.props.surveys.reverse().map(survey => {
             return (
-            <div key= {survey._id} className="card  blue-grey darken-1">
-                <div className="card-content white-text ">
-                  <span className="card-title ">{survey.title}</span>
-                  <p>{survey.body}</p>
-                  <p className="right" >
-                    Sent on: {new Date(survey.dateSent).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="card-action">
-                  <a >Yes: {survey.yes}</a>
-                  <a >No: { survey.no}</a>
-                  <a href="#!"  
-                    onClick={this.deleteSurvey.bind(this, survey._id )}
-                    style = {{margin: '0 8px'}} 
-                    className="right">
-                    Remove Survey
-                  </a>
-                </div>
-            </div>
+                <SurveyCard key={survey._id} survey={survey} />
             );
         });
-    }
+    } 
 
     render(){
+        const length = this.props.surveys.length;
+
         return(
-            <div>
-                {this.renderSurveyNav()}
-                {this.renderSurveys()}
-            </div>
+            <div className="custom-pos-relative custom-pt-20">
+               <div className={ length ? "custom-survey_card" : "custom-pos-relative custom-mt-100"}>
+                    {this.renderSurveyNav()}
+                    {this.renderSurveys()}
+               </div>
+           </div>
         );
     }
 }
 
 function mapStateToProps(state) {
-    return { surveys: state.surveys };
+    return { 
+            surveys: state.surveys
+        };
 }
 
 export default connect(mapStateToProps, actions )(SurveyList);
-
-
-/* renderSurveyNav(){
-    return (
-
-        <nav style = {{margin: '20px 0' }}>
-            <div className="nav-wrapper blue-grey lighten-5 " >
-                <a href="#!"  className="left grey-text text-darken-1 "
-                style = {{margin: '0 0 0 15px', fontSize: '1.5em' }}>Active surveys</a>
-          
-                <div className="right " style = {{margin: '0 20px 0 0'}}>
-                    <Dropdown options={{hover:true}} trigger={
-                            <a
-                            className="blue-grey lighten-5 btn-flat "
-                            >Sort By</a>
-                        }>
-                        <NavItem onClick={this.sortAscSurveys.bind(this)}>Date Sent Asc</NavItem>
-                        <NavItem divider />
-                        <NavItem onClick={this.sortDescSurveys.bind(this)}>Date Sent Desc</NavItem>
-                        <NavItem divider />
-                        <NavItem  onClick={this.sortYesSurveys.bind(this)}>Yes Response</NavItem>
-                    </Dropdown>
-                </div>
-
-            </div>
-        </nav>
-
-    )
-} */

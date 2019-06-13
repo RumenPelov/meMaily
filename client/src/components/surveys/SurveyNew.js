@@ -43,20 +43,20 @@ class SurveyNew extends Component {
 
     render () {
         return (
-            <div>
-                {this.renderContent()}
+            <div className="custom-pos-relative custom-pt-20">
+                <div className="custom-survey_card">
+                    {this.renderContent()}
+                </div>
             </div>
         );
     }
 }
 function mapStateToProps(state) {
     //console.log(state);
-
     return { 
         DraftValues: state.formInit
     };
 }
-
 
 SurveyNew =  reduxForm({
     form: 'surveyForm'
