@@ -10,7 +10,8 @@ function countVisits() {
         "use strict";
         const ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
         const date = new Date().toDateString();
-        const visited = date + " " + ip;
+        const time = new Date().toTimeString().substring(0, 2);
+        const visited = date + " "+ time + "h " + ip;
         if (this.visited!== visited) {
 
             this.visited = visited;
@@ -20,7 +21,7 @@ function countVisits() {
                     console.log("Mongoose Error: ", err.message);
                 }
                 if(doc) {
-                    console.log("Inserted document into visits collection.");
+                    console.log("Inserted document into visits collection.", visited);
                 }
             });
         }

@@ -15,7 +15,7 @@ class Landing extends Component {
                         Emaily
                     </h3>
                     <h6 className="custom-line">Fast and easy way to collect feedback from your clients</h6>
-                    <h6 className="custom-line">Login to start sending surveyes</h6>
+                    <h6 className="custom-line">Login to start sending surveys</h6>
                     <a className="custom-btn  custom-btn--grey  custom-my-20 " href="/auth/google">Login With Google</a>
                 </div>
                 );

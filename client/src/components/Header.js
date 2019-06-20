@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
-import 'jquery';
-import 'materialize-css';
-import {NavItem, Dropdown } from 'react-materialize';
 
 import Payments from './Payments';
 import * as actions  from '../actions';
 
 class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state =  {expand: false};
+    }
+
+    toggle = () => {
+        this.setState({expand: !this.state.expand });
+    }
     
     componentWillMount() {
         this.props.fetchUser(this.props.history);
@@ -31,7 +37,7 @@ class Header extends Component {
                     <li key='1' ><Payments btnClass="custom-btn custom-btn--green custom-inline"/></li>,
                     <li key='3' style = {{margin: '0 10px' }}>  Credits: {this.props.auth.credits} </li>,
                     <li key='2' ><a onClick={this.logout} href="#!">Logout</a></li>
-                    ];
+                ];
         }
     }
 
@@ -41,47 +47,43 @@ class Header extends Component {
                 return ;
             case false :
                 return (
-                    <NavItem  href="/auth/google">Login With Google</NavItem> 
+                    <a  href="/auth/google" className="custom-nav_menu-item">Login With Google</a> 
                 );
             default:
-            return [
-            <NavItem key='1' onClick={()=>{}}><Payments btnClass="" /></NavItem>,
-            <NavItem key='3' onClick={()=>{}}>Credits: {this.props.auth.credits} </NavItem>,
-            <NavItem key='4' divider />,
-            <NavItem  key='2' onClick={this.logout} >Logout</NavItem> 
-            ];
-                
-            
+                return [
+                    <button key='1' className="custom-nav_menu-item" onClick={()=>{}}><Payments btnClass="" /></button>,
+                    <button key='3' className="custom-nav_menu-item" onClick={()=>{}}>Credits: {this.props.auth.credits} </button>,
+                    <button key='2' className="custom-nav_menu-item" onClick={this.logout} >Logout</button> 
+                ];
         }
     }
 
-
     render() {
-
         return (
         <div >
             <nav className="nav-wrapper deep-orange accent-4">
                 <div className="container">
-                    <div className="nav-wrapper ">
+                    <div className="custom-nav ">
                     <Link style = {{margin: '0 10px' }}
                         to={this.props.auth ? '/surveys' : '/'}
-                        className="left brand-logo"
+                        className="custom-nav_logo"
                         >Emaily</Link>
 
-                    <div className="right hide-on-med-and-up" style = {{margin: '0 20px'}}>
-                        <Dropdown options={{hover:true}} 
-                            trigger={
-                            <a href="#!" type="text">
-                                <i className="material-icons">menu</i>
-                            </a>
-                            }>
+                    <div className="hide-on-med-and-up custom-nav_menu" 
+                         style = {{margin: '0 10px'}} 
+                         onClick={this.toggle}>
+                        <svg className="custom-nav_menu-icon" >
+                            <use xlinkHref='sprite.svg#icon-menu'></use>
+                        </svg> 
+
+                        <div className={this.state.expand ? "custom-nav_menu-content custom-nav_menu-toggle" : "custom-nav_menu-content"}>
                             {this.renderDropContent()}
-                        </Dropdown>
+                        </div>
                     </div>
-            
-                    <ul id="nav-mobile" className="right hide-on-small-and-down">
+
+                    <ul id="" className="hide-on-small-and-down">
                         {this.renderContent()}
-                    </ul>               
+                    </ul>                          
                 </div>      
                 </div>
             </nav>
