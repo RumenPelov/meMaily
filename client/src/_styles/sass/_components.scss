@@ -14,7 +14,7 @@
     margin-top: 2px;
   }
 
-.custom-landing_card{
+.custom-landing_card_obsolete{
     position: absolute;
     top: 20%;
     left: 50%;
@@ -43,8 +43,32 @@
     }
 }
 
+.custom-landing_card{
+    //position: absolute;
+    //top: 20%;
+    margin-top: 20vh;
+    padding: 20px 60px;
+    background-color:rgba(255,255,255, .1);
+    text-align: center;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    box-shadow: 0 1.5rem 4rem rgba(0,0,0, .15);
+
+    @media only screen and (max-width:$bp-medium) {
+        padding: 15px 15px;
+        min-width: 400px;
+    }
+    @media only screen and (max-width:$bp-small) {
+        padding: 15px 10px;
+        min-width: 280px;
+    }
+}
+
 .custom-survey_card{
-    position: absolute;
+    //position: absolute;
     width: 100%;
     padding: 20px 20px 10px 20px;
     background-color:rgba(255,255,255, .6);
@@ -415,6 +439,10 @@
     &-2{
         font-size: $xlarge-font-size;
     }
+}
+
+.custom-width-100{
+    width:100%;
 }
 
 

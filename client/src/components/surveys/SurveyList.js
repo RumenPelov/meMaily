@@ -1,6 +1,8 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
+import Fade from 'react-reveal/Fade'
+import { Flex } from 'rebass'
 import * as actions  from '../../actions';
 
 import SurveyCard from './surveyCard';
@@ -13,7 +15,6 @@ class SurveyList extends Component {
             this.props.fetchSurveys(); 
     }
 
-
     sortAscSurveys = () => {
         const surv = this.props.surveys.slice();
         this.props.sortAscSurveys(surv); 
@@ -23,7 +24,6 @@ class SurveyList extends Component {
         const surv = this.props.surveys.slice();
         this.props.sortDescSurveys(surv); 
     }
-
 
     sortYesSurveys = () => {
         const surv = this.props.surveys.slice();
@@ -38,7 +38,7 @@ class SurveyList extends Component {
        
         if (this.props.surveys.length){
             return (
-                <div>
+                <div >
                     <div className="custom-group-buttons custom-mt-15" >
                         <div>
                             <h5 className=" grey-text text-darken-1 custom-margin-none">Active surveys</h5>
@@ -80,12 +80,14 @@ class SurveyList extends Component {
         const length = this.props.surveys.length;
 
         return(
-            <div className="custom-pos-relative custom-pt-20">
-               <div className={ length ? "custom-survey_card" : "custom-pos-relative custom-mt-100"}>
-                    {this.renderSurveyNav()}
-                    {this.renderSurveys()}
-               </div>
-           </div>
+            <Flex justifyContent="center">
+                <Fade bottom>
+                    <div className={ length ? "custom-survey_card custom-mt-40" : "custom-pos-relative "}>
+                        {this.renderSurveyNav()}
+                        {this.renderSurveys()}
+                    </div>
+                </Fade>
+            </Flex>
         );
     }
 }
@@ -97,3 +99,4 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, actions )(SurveyList);
+

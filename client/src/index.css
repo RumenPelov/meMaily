@@ -50,7 +50,7 @@ code {
   position: relative;
   margin-top: 2px; }
 
-.custom-landing_card {
+.custom-landing_card_obsolete {
   position: absolute;
   top: 20%;
   left: 50%;
@@ -69,6 +69,26 @@ code {
   -o-border-radius: 20px;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15); }
   @media only screen and (max-width: 56.25em) {
+    .custom-landing_card_obsolete {
+      padding: 15px 15px;
+      min-width: 400px; } }
+  @media only screen and (max-width: 37.5em) {
+    .custom-landing_card_obsolete {
+      padding: 15px 10px;
+      min-width: 280px; } }
+
+.custom-landing_card {
+  margin-top: 20vh;
+  padding: 20px 60px;
+  background-color: rgba(255, 255, 255, 0.1);
+  text-align: center;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15); }
+  @media only screen and (max-width: 56.25em) {
     .custom-landing_card {
       padding: 15px 15px;
       min-width: 400px; } }
@@ -78,7 +98,6 @@ code {
       min-width: 280px; } }
 
 .custom-survey_card {
-  position: absolute;
   width: 100%;
   padding: 20px 20px 10px 20px;
   background-color: rgba(255, 255, 255, 0.6);
@@ -335,6 +354,9 @@ code {
     color: #434343; }
   .custom-text-2 {
     font-size: 1.5rem; }
+
+.custom-width-100 {
+  width: 100%; }
 
 .custom-butom-text {
   color: #757575 !important; }

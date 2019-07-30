@@ -67,4 +67,3 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps, actions)(withRouter(SurveyFormReview));
 
-//() => submitSurvey(formValues, history)

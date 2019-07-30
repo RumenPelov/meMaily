@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Fade from 'react-reveal/Fade'
+import { Flex } from 'rebass'
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -21,7 +23,7 @@ class Landing extends Component {
                 );
             default:
                 return  (
-                    <div  >
+                <div>
                     <h5 className="custom-mt-20"> Welcome to Emaily! </h5>
                     <h6 className="custom-mt-10 custom-line">You are now ready to start collecting feedbacks </h6>
                     <Link className="custom-btn  custom-btn--grey custom-my-20 "
@@ -32,13 +34,15 @@ class Landing extends Component {
         }
     }
 
-
     render() {
-
         return (
-            <div  className="custom-landing_card">
-                {this.renderContent()}
-            </div>
+            <Flex justifyContent="center">
+                <Fade bottom>
+                    <div  className="custom-landing_card">
+                        {this.renderContent()}
+                    </div>
+                </Fade>
+            </Flex>       
         )
     }
 }

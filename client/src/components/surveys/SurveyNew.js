@@ -2,6 +2,8 @@
 import React, { Component} from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import Fade from 'react-reveal/Fade'
+import { Flex } from 'rebass'
 import SurveyForm from './SurveyForm';
 import SurveyFormReview from './SurveyFormReview';
 import { fetchDraft, clearDraft }  from '../../actions';
@@ -13,7 +15,6 @@ class SurveyNew extends Component {
         this.state = {showFormReview: false};
 
         this.props.fetchDraft();
-
     } 
     //the above state initialization, could be replaced with just:
     //state = {showFormReview: false};
@@ -24,8 +25,6 @@ class SurveyNew extends Component {
         }
 
     renderContent() {
-        
-
         if (this.props.DraftValues._id || this.props.DraftValues.noDraft ){
 
             if(this.state.showFormReview) {
@@ -38,21 +37,22 @@ class SurveyNew extends Component {
                 onSurveySubmit={() => this.setState({showFormReview: true})}
             />;
         }
-        return <div>Loading...</div>
+        //return <div>Loading...</div>
     }
 
     render () {
         return (
-            <div className="custom-pos-relative custom-pt-20">
-                <div className="custom-survey_card">
-                    {this.renderContent()}
-                </div>
-            </div>
+            <Flex justifyContent="center">
+                <Fade top>
+                    <div className="custom-survey_card custom-mt-20">
+                        {this.renderContent()}
+                    </div>
+                </Fade>
+            </Flex>
         );
     }
 }
 function mapStateToProps(state) {
-    //console.log(state);
     return { 
         DraftValues: state.formInit
     };
